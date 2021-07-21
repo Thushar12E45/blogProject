@@ -1,0 +1,31 @@
+<%- include ('partials/header') %>
+
+  <h2> Login</h2>
+
+  <div class="page-divide">
+
+    <img src="/images/loginImage.png" alt="Image of a coder working" class="left-side">
+
+    <div class="right-side login">
+      <%- include ('partials/messages') %>
+        <form action="/user/login" method="POST">
+
+          <div class="form-group  ">
+            <label for="email"> Email </label>
+            <input type="email" id="email" name="email" class="form-control  login-form" />
+          </div>
+
+          <div class="form-group">
+            <label for="password"> Password</label>
+            <input type="password" id="password" name="password" class="form-control login-form" />
+          </div>
+
+          <div class="center">
+            <button type="submit" class="btn blue login-btn">Login</button>
+            <a href="/" class="abutton grey"> Cancel </a>
+          </div>
+
+        </form>
+        <h5> <a href="/user/register" class="center">Need an account?</a> </h5>
+    </div>
+  </div>

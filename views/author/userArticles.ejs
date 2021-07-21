@@ -1,0 +1,33 @@
+<%- include('../partials/headerAfterLogin') %>
+
+  <h3> Hello <%= userName %>,</h3>
+  <div>
+    <%- include ('../partials/messages') %>
+  </div>
+  <div class='card-article'>
+    <% articles.forEach(article=> { %>
+      <div class=article-section>
+        <div>
+          <div class="img-container">
+            <img class="article-img" src="/uploads/<%= article.id %>" alt="image" />
+          </div>
+
+          <h3>
+            <a href="/user/post/<%= article.id %>">
+              <%= article.title.toUpperCase() %>
+            </a>
+          </h3>
+        </div>
+        <div>
+          <form action="/user/<%= article.id%>?_method=DELETE" method="POST">
+            <span>
+              <%= article.date.toDateString() %>
+            </span> <br>
+            <span> <a href="/user/edit/<%= article.id%>"> Edit </a>
+              &nbsp;|&nbsp;
+              <button class="delete-btn" type="submit"> <span> Delete </span></button>
+          </form>
+        </div>
+      </div>
+      <% })%>
+  </div>

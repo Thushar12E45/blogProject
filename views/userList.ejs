@@ -1,0 +1,46 @@
+
+<%- include('./partials/headerAfterLogin') %>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        User
+      </th>
+      <th>
+        Role
+      </th>
+      <th>
+        Change Role
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% userList.forEach(user =>{ %>
+    <tr>
+      <td>
+        <%=  user.name %> 
+      </td>
+      <td>
+        <%=  user.role %>
+      </td>
+      <td>
+        <form action="/user/update/userList" method="POST" >
+          <input type="text"  name="userId" ,id="userId" class="hidden-input"value ="<%=  user.id %>" >
+        
+        <select id="userRole" name="userRole" class="search-input">
+          <option value="null" disabled selected > Change role to </option>
+          <option value="ADMIN"> ADMIN </option>
+          <option value="AUTHOR"> AUTHOR </option>
+          <option value="EDITOR"> EDITOR </option>
+        </select>
+          <button type="submit" class="search-button">Go</button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+
+</table>
+
+

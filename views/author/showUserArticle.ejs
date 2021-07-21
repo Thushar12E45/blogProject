@@ -1,0 +1,32 @@
+<%- include('../partials/headerAfterLogin') %>
+  <%- include('../partials/messages') %>
+    <div class="read-article">
+      <h2>
+        <%= article.title.toUpperCase() %>
+      </h2>
+
+      <div class="center"> by &nbsp;
+        <span>
+          <%= article.userTable.name.toUpperCase() %>
+        </span>
+      </div>
+
+      <div class="img-container read">
+        <img class="article-img" src="/uploads/<%= article.id %>" alt="image" />
+      </div>
+
+      <p>
+        <%- article.markdown%>
+      </p>
+
+      <form action="/user/<%= article.id%>/?_method=DELETE" method="POST">
+        <span> <a href="/user/edit/<%= article.id %>"> Edit </a>
+          &nbsp;|&nbsp;
+          <button class="delete-btn" type="submit"> <span> Delete </span></button>
+      </form>
+
+      <a href="/user/posts" class=" center">
+        <span class="material-icons">keyboard_backspace</span> Back
+      </a>
+
+    </div>

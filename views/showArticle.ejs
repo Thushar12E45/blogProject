@@ -1,0 +1,39 @@
+
+<% if(!loggedIn) { %>
+<%- include('./partials/headerBeforeLogin') %>
+<% } else {  %>
+<%- include('./partials/headerAfterLogin') %>      
+<% } %>
+<div class="read-article">
+  
+  <h2>
+    <%= article.title.toUpperCase() %>
+  </h2>
+
+  <div class="center"> by &nbsp;
+    <a href="/search?keyword=&authorName=<%= article.userTable.name %>" class="center">
+      <span> <%= article.userTable.name.toUpperCase() %> </span> 
+    </a>
+  </div>
+
+  <div class="img-container read"> 
+    <img class="article-img"  src="/uploads/<%= article.id %>"  alt="image" />
+
+  </div>
+  <p>
+    <%- article.markdown%>
+  </p>
+  <% if(loggedIn) { %>
+    <form action="/user/<%= article.id%>?_method=DELETE" method="POST">
+      <span> <a href="/user/edit/<%= article.title%>" > Edit </a> 
+       &nbsp;|&nbsp;
+      <button class="delete-btn" type="submit"> <span> Delete </span></button>
+    </form>
+    <% } %>
+
+
+  <a href="/" class=" center"> 
+    <span class="material-icons">keyboard_backspace</span> Back to home page
+  </a>
+
+</div>

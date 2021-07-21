@@ -1,0 +1,88 @@
+<div id="blogsection">
+
+  <% if(!loggedIn) { %>
+  <%- include('./partials/headerBeforeLogin') %>
+  <% } else { %>
+  <%- include('./partials/headerAfterLogin') %>
+      <h3> Hello <%= loggedUser.name %>, </h3>
+  <% } %>
+  <% if(loggedUser.role==='ADMIN' ){ %>
+      <a href="user/admin/" class="search-button " > User List</a>
+  <% } %>
+  <form action="/search" method="get">
+    <div class="form-group search ">
+      <input type="text" name="keyword" id="keyword" class="search-input" placeholder="Search by keyword" value=<%=data.keyword %> >
+      <button type="submit" class="search-icon"><span class="material-icons ">search</span></button>
+
+        <select id="author" name="author" class="search-input">
+          <option value="" <% if(author===null){%> selected <% } %>
+            >Search by author
+          </option>
+
+          <% authorList.forEach(author=> { %>
+            <option value="<%= author.name %>" <% if(author===author.name) { %> selected <% } %> > 
+              <%= author.name %>
+            </option>
+          <% }) %>
+        </select>
+
+        <div class="sort">
+          <label for="sortType"> Sort by:</label>
+          <input type="radio" class="rad-btn" name="sortType" value="desc" class="search-input" 
+            <% if(data.sortType=='desc' ) { %> checked <% } %> > Latest
+          <input type="radio" class="rad-btn" name="sortType" value="asc" class="search-input" 
+            <% if(data.sortType=='asc' ) { %> checked <% } %>  > Oldest
+        </div>
+          <button type="submit" class="search-button"> Go</button>
+    </div>
+    <%- include ('partials/messages') %>
+  </form>
+  <div class='card-article '>
+    <% articles.forEach(article=> { %>
+      <div class=article-section>
+        <div>
+          <div class="img-container">
+            <img class="article-img" src="/uploads/<%= article.id %>" alt="image" />
+          </div>
+
+          <h3> <a href="/article/show/<%= article.id %>"> <%= article.title.toUpperCase() %> </a> </h3>
+        </div>
+
+        <div>
+          <span> <%= article.date.toDateString() %> </span>
+              &nbsp;|&nbsp;
+          <a href="/search?keyword=&authorName=<%= article.userTable.name %>">
+            <span> <%= article.userTable.name %> </span>
+          </a>
+          <% if(loggedIn){ %>
+           <div>
+              <form action="/user/<%= article.id%>?_method=DELETE" method="POST">
+                <% if(loggedUser.role === 'ADMIN' || loggedUser.role === 'EDITOR' || loggedUser.id == article.authorId ) { %>
+                  <span> <a href="/user/edit/<%= article.id%>"> Edit </a>
+                                 &nbsp;|&nbsp;
+                <% } %>
+                <% if(loggedUser.role === 'ADMIN' ||  loggedUser.id == article.authorId ) { %>
+                  <button class="delete-btn" type="submit"> <span> Delete </span></button>
+                <% } %>
+
+              </form>
+            </div>
+
+            <% if(loggedUser.role==='ADMIN' ){ %>
+              <form action="/user/admin/changeAuthor?_method=PUT" method="POST">
+                <select id="newAuthorId" name="newAuthorId" class="search-input change-author">
+                  <option value="null" selected > Change author to ...</option>
+                    <% authorList.forEach(author=> { %>
+                  <option value="<%= author.id %>" > <%= author.name %> </option>
+                    <% }) %>
+                </select>
+                <input type="text"  name="articleId" ,id="articleId" class="hidden-input"value ="<%= article.id %>" >
+                <button type="submit" class="search-button"> Go</button>
+              </form>
+            <% } %>        
+          <% } %>
+        </div>
+      </div>
+    <% })%>
+  </div>
+</div>

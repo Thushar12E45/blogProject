@@ -1,0 +1,15 @@
+
+<%- include ('../partials/header') %>
+
+<div class="new-article">
+  <h2> New Article</h2>
+
+  <form action="/user/" method="post" enctype="multipart/form-data">
+    <%- include('../partials/messages') %>
+    <%- include('../partials/form_fields')%>
+    <div class="center">
+    <button type="submit" class="btn black "> Publish </button>
+    <a href="/user/" class="abutton grey"> Cancel </a>
+  </div>
+  </form>
+</div>
